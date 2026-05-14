@@ -1,0 +1,59 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* prevent double scrollbars */
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'DM Sans', sans-serif;
+  background: #0a0a0f;
+  color: #f0ede8;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0; left: 0;
+}
+
+/* ── Scrollable page wrapper — use this class on every page ── */
+.page {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* iOS momentum scroll */
+  overscroll-behavior-y: contain;
+}
+
+:root {
+  --bg:        #0a0a0f;
+  --bg2:       #13131a;
+  --bg3:       #1c1c26;
+  --border:    #2a2a38;
+  --text:      #f0ede8;
+  --text2:     #9896a4;
+  --accent:    #c8ff00;
+  --accent2:   #ff6b35;
+  --danger:    #ff3b5c;
+  --radius:    16px;
+  --radius-sm: 10px;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --nav-height: 64px;
+}
+
+::-webkit-scrollbar { width: 0px; } /* hide scrollbar on mobile */
+h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
