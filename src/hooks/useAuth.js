@@ -3,14 +3,20 @@ import { supabase } from '../lib/supabase'
 import { useAppStore } from '../store/useAppStore'
 
 export function useAuth() {
-  const { user, setUser, setProfile, setIsPro, freeScansUsed } = useAppStore()
+  const { setUser, setProfile, setIsPro, setAuthReady } = useAppStore()
 
   useEffect(() => {
+    // Resolve existing session first
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
-      if (session?.user) fetchProfile(session.user.id)
+      if (session?.user) {
+        fetchProfile(session.user.id).finally(() => setAuthReady(true))
+      } else {
+        setAuthReady(true)   // No user — still mark as ready
+      }
     })
 
+    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
       if (session?.user) fetchProfile(session.user.id)
@@ -44,5 +50,5 @@ export function useAuth() {
     return supabase.auth.signOut()
   }
 
-  return { user, signInWithEmail, signUpWithEmail, signOut }
+  return { signInWithEmail, signUpWithEmail, signOut }
 }
